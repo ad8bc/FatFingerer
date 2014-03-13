@@ -1,0 +1,118 @@
+#include <Wire.h>
+
+// set pin numbers for input buttons and monitor LED
+const int Run = 2;
+const int Red = 4;
+const int Yellow = 5;
+const int Green = 6;
+const int Blue = 7;
+const int Black = 8;
+const int Left = 9;
+const int Right = 10;
+const int LeftFoot = 11;
+const int RightFoot = 12;
+const int LED = 13;
+boolean key = false;
+
+// Set input/output modes and enable pullup resistors
+void setup()  {
+  pinMode(Run, INPUT_PULLUP);
+  pinMode(Red, INPUT_PULLUP);
+  pinMode(Yellow, INPUT_PULLUP);  
+  pinMode(Green, INPUT_PULLUP);
+  pinMode(Blue, INPUT_PULLUP);
+  pinMode(Black, INPUT_PULLUP); 
+  pinMode(Left, INPUT_PULLUP);  
+  pinMode(Right, INPUT_PULLUP);
+  pinMode(LeftFoot, INPUT_PULLUP);
+  pinMode(RightFoot, INPUT_PULLUP);
+  pinMode(LED, OUTPUT);
+
+  Keyboard.begin();
+}
+
+void loop () {
+// If Run switch is on, activate LED and scan for buttons.  If Run switch is Low, skip to end.
+  while (digitalRead(Run) == LOW)  {
+     digitalWrite(LED,HIGH);
+     if (digitalRead(Red) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('x');
+       Keyboard.releaseAll();
+       delay(200);
+       nokeys();
+       }     
+     if (digitalRead(Yellow) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('c');
+       Keyboard.releaseAll();
+       delay(200);
+       nokeys();
+       }
+     if (digitalRead(Green) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('v');
+       Keyboard.releaseAll();
+       delay(200);
+       nokeys();
+       }
+     if (digitalRead(Blue) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('a');
+       Keyboard.releaseAll();
+       delay(200);
+       nokeys();
+       }
+     if (digitalRead(Black) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press(KEY_LEFT_ALT);
+       Keyboard.press(KEY_DELETE);
+       Keyboard.releaseAll();
+       delay(1000);
+       Keyboard.write(' ');
+       Keyboard.write(KEY_BACKSPACE);
+       delay(100);
+       nokeys();
+       }
+     if (digitalRead(Left) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('z');
+       Keyboard.releaseAll();
+       delay(100);
+       nokeys();
+       }
+     if (digitalRead(Right) == LOW) {
+       digitalWrite(LED,LOW);
+       Keyboard.press(KEY_LEFT_CTRL);
+       Keyboard.press('y');
+       Keyboard.releaseAll();
+       delay(200);
+       nokeys();
+       }
+     } 
+  while (digitalRead(Run) == HIGH) {
+      digitalWrite(LED,LOW);
+      Keyboard.releaseAll(); 
+  }
+}
+//  Loop to keep from repeating when key held down
+void nokeys ()  {
+  notclear:       
+      if   (digitalRead(Red) == LOW) {goto notclear;}
+      if   (digitalRead(Yellow) == LOW) {goto notclear;}
+      if   (digitalRead(Green) == LOW) {goto notclear;}
+      if   (digitalRead(Blue) == LOW) {goto notclear;}
+      if   (digitalRead(Black) == LOW) {goto notclear;}
+      if   (digitalRead(Left) == LOW) {goto notclear;}
+      if   (digitalRead(Right) == LOW) {goto notclear;}
+      if   (digitalRead(LeftFoot) == LOW) {goto notclear;}
+      if   (digitalRead(RightFoot) == LOW) {goto notclear;}
+
+}
+  
